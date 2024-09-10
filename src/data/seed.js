@@ -9,49 +9,77 @@ async function main() {
   await prisma.article.deleteMany({});
   await prisma.comment.deleteMany({});
 
-  const article1 = await prisma.article.create({
-    data: {
-      title: "First Article Title",
-      content: "First Article Content",
-    },
-  });
-  const article2 = await prisma.article.create({
-    data: {
-      title: "Second Article Title",
-      content: "Second Article Content",
-    },
-  });
-  const article3 = await prisma.article.create({
-    data: {
-      title: "Third Article Title",
-      content: "Third Article Content",
-    },
-  });
+  // 10개의 게시글 생성
+  const articles = [];
+  for (let i = 1; i <= 10; i++) {
+    const article = await prisma.article.create({
+      data: {
+        title: `Article Title ${i}`,
+        content: `Article Content ${i}`,
+      },
+    });
+    articles.push(article);
+  }
 
-  await prisma.comment.createMany({
-    data: [
-      {
-        content: "First article Comment1",
-        category: "BOARD",
-        articleId: article1.id,
-      },
-      {
-        content: "First article Comment2",
-        category: "BOARD",
-        articleId: article1.id,
-      },
-      {
-        content: "Second article Comment",
-        category: "MARKET",
-        articleId: article2.id,
-      },
-      {
-        content: "Third article Comment",
-        category: "MARKET",
-        articleId: article3.id,
-      },
-    ],
-  });
+  // 각 게시글에 대해 10개의 댓글 생성
+  for (let i = 0; i < articles.length; i++) {
+    const article = articles[i];
+
+    await prisma.comment.createMany({
+      data: [
+        {
+          content: `Comment 1 for Article ${article.title}`,
+          category: "BOARD",
+          articleId: article.id,
+        },
+        {
+          content: `Comment 2 for Article ${article.title}`,
+          category: "BOARD",
+          articleId: article.id,
+        },
+        {
+          content: `Comment 3 for Article ${article.title}`,
+          category: "MARKET",
+          articleId: article.id,
+        },
+        {
+          content: `Comment 4 for Article ${article.title}`,
+          category: "MARKET",
+          articleId: article.id,
+        },
+        {
+          content: `Comment 5 for Article ${article.title}`,
+          category: "BOARD",
+          articleId: article.id,
+        },
+        {
+          content: `Comment 6 for Article ${article.title}`,
+          category: "BOARD",
+          articleId: article.id,
+        },
+        {
+          content: `Comment 7 for Article ${article.title}`,
+          category: "MARKET",
+          articleId: article.id,
+        },
+        {
+          content: `Comment 8 for Article ${article.title}`,
+          category: "MARKET",
+          articleId: article.id,
+        },
+        {
+          content: `Comment 9 for Article ${article.title}`,
+          category: "BOARD",
+          articleId: article.id,
+        },
+        {
+          content: `Comment 10 for Article ${article.title}`,
+          category: "MARKET",
+          articleId: article.id,
+        },
+      ],
+    });
+  }
 }
 
 main()
