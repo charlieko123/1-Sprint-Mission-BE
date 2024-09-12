@@ -44,7 +44,7 @@ router.get(
 
 // 자유게시판 댓글 목록 조회 (Article)
 router.get(
-  "/board/:articleId/comments",
+  "/articles/:articleId/comments",
   asyncHandler(async (req, res) => {
     const { cursor, take = 10 } = req.query;
     const { articleId } = req.params;
@@ -134,7 +134,7 @@ router.post(
 
 // 자유게시판 댓글 등록
 router.post(
-  "/board/:articleId/comments",
+  "/articles/:articleId/comments",
   asyncHandler(async (req, res) => {
     const { articleId } = req.params;
     const comment = await prisma.comment.create({
